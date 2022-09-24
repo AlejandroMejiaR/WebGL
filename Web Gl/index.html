@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title>WebGl</title>
+</head>
+<body>
+    <main class="main">
+        <article class="container">
+            <h1>WEB GL</h1>
+            <div>
+                <h2>¿Que es webGL?</h2>
+                    <p> <b> WebGL</b> es una interfaz de programación de aplicaciones gráficas (API) creada para su uso en aplicaciones web. Se basa en el lenguaje integrado de gráficos abiertos (OpenGL) (ES). Está actualmente diseñada y mantenida por el grupo<a href=https://www.khronos.org/webgl> Khronos Group </a>como código de dos partes: código de control y código de sombreado (shaders) </p>
+                    <p> WebGL se utiliza para representar gráficos 2D y 3D interactivos en navegadores web compatibles, sin tener que descargar ni instalar ningún complemento. La API esta implementada con <a href="https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/What_is_JavaScript"> JavaScript</a>.</p>
+                <p><a href="https://www.youtube.com/watch?v=L6uBJvoBhPA&list=PLRtjMdoYXLf4aWJ5WJl8_vBnynl6st_sQ&index=1">¿Que diferencias hay entre OpenGL - OpenGL ES - WebGL?</a></p>
+            </div>
+            <div>
+                <h2>¿Como empezar?</h2>
+                <p>Tener conocimiento basicos acerca las tegnologias de la web (html , css , JavaScript), de como funciona una API grafica, saber como ocurre el proceso de dibujado, que se necesita para tal y cual es el camino para que se muestre en pantalla. Esto puede ser complicado si no se tiene conocimiento previo de OpenGL, sin embargo se puede aprender webGL desde 0.</p>
+            </div>
+            <div>
+                <h1>Estructura basica</h1>
+                <h2>Crear la pagina</h2>
+                <h3>Crear un canvas y asignarle un borde</h3>
+                <img src="img/html.png" alt="Crear canvas">
+                <p></p>
+                <img src="img/css.png" alt="Poner borde al canvas">
+                <h3>Obtener el contexto del canvas dentro del script</h3>
+                <img src="img/context.png" alt="Obtener contexto del canvas">
+                <p>La variable webgl2 contiene una referencia a un contexto de representación WebGL. Este contexto es la interfaz principal de la API de WebGL.</p>
+            </div>
+            <div>
+                <div>
+                    <h2>Shaders</h2>
+                    <p>Los shaders son programas de dibujo precompilados que se ejecutan dentro de la GPU. Están escritos en un lenguaje similar a C llamado GLSL y proporcionan instrucciones de renderizado a la GPU. Para realizar el render existen dos tipos de shaders: Vertex and fragment.</p>
+                    <p>En el codigo se utilizan diferentes tipos de variables, como const y uniform, existen otras importantes por lo que hay que entender sus<a href=https://stackoverflow.com/questions/17537879/in-webgl-what-are-the-differences-between-an-attribute-a-uniform-and-a-varying > diferencias </a>y su relacion con las funciones a trabajar.</p>
+                </div>
+                <div>
+                    <h3>Vertex shaders</h3>
+                    <p>Los vertex shaders describen cómo dibujar los vértices que forman uno o más polígonos. Estos estan definidos un unas coordenadas, sin embargo, el vertex shader no conoce las posiciones reales de estas, solo sabe que existen y que estarán disponibles a través de algún atributo proporcionado cuando se ejecute el programa.</p>
+                    <p>Lo definimos de la siguiente manera:</p>
+                    <img src="img/vertex.png" alt="codigo vertexshader">
+                    <p>Se crea una variable const en este caso vertexShaderSrc</p>
+                    <p>Dentro de esta se define, un uniform llamado uPosition del tipo vec2 (un vector bidimensional) contiene datos posicionales sobre un vértice. Asigne ese valor en un vec4 (vector de 4 dimensiones) correspondiente a la variable global especial WebGL gl_Position, como uposition es de solo dos dimensiones, se debe completar el restante de la variable gl_Position, el cuarto valor hace referencia a un multiplicador de coordenadas.</p>
+                    <p>Tambien se define, un uniform llamado uPointSize del tipo float contiene el valor del tamaño a dibujar, en este caso asignado a un float correspondiente a la varibale global especial WebGl gl_PointSize.</p>
+                </div>
+                <div>
+                <h3>Fragment shaders</h3>
+                    <p>Los fragment shaders describen el espacio entre los vértices. Mientras que el vertex shaders se invocó una vez para cada vértice, el programa de fragment shaders se invocó una vez para cada píxel en el espacio entre esos vértices. Este describe el color de cada píxel.</p>
+                    <p>Lo definimos de la siguiente manera:</p>
+                    <img src="img/fragme.png" alt="codigo fragmentshader">
+                    <p>Se crea una variable const en este caso fragmentShaderSrc</p>
+                    <p>Dentro de esta se define, un variable de precision en este caso un valor de precision en este caso mediump float. Un uniform llamado uIndex del tipo int y un uniform llamado uColors[3] del tipo vec4. Se crea un out correspondiente a la variable global especial WebGL fragColor de tipo vec4  que sera el que contendra los colores RGBA, en este caso se asigna a la variable uColores el indice uIndex para escojer entre Rojo(0), Verde(1), azul(2).</p>
+                </div>
+                <div>
+                    <p>Los shaders actuan en conjunto, asignados a un programa. Ya que se han definido, seguimos el siguiente camino para poder crearlos y unirlos al programa.</p>
+                    <img src="img/shaders.png" alt="codigo shaders">
+                    <p>Por lo que realizando en codigo se utilizan funciones propias de WebGL determinadas para cada uno de los fines</p>
+                    <img src="img/program.png" alt="codigo programa">
+                    <p>Como se observa, primero se crean con la funcion gl.createShader(), luego se le asigna el valor que antes definimos con la funcion gl.shaderSource(), se compilan con la funcion gl.compileShader(), luego los unimos a el programa con la funcion gl.attachShader(), linkeamos el programa con la funcion gl.linkProgram, por ultimo definimos el programa a usar con la funcion gl.useProgram().</p>
+                </div>
+            </div>
+            <div>
+                <h2>Definir coordenadas, grosor y color</h2>
+                <p>Como en este caso utilizamos uniform, para definir nuestras variables tenemos que utilizar la siguiente Estructura</p>
+                <img src="img/coord.png" alt="codigo coordenadas,grosor,color">
+                <p>En el caso de utilizar uniform, no es necesario un buffer, ya que no se almacenaran los vertices, si no que, se iran dibujando mediante la ejecucion del programa</p>
+                <p>Para obtener los valores de las variables, definimos una variable de tipo const la cual señalará mediante la funcion gl.getUniformLocation() la variable a modificar. Para asignarle un valor se tendra que utilizar las funciones gl.uniform(tipodedato). Por ejemplo, en el caso de uPosition, sabemos que son coordenadas bidimensionales, entonces la funcion a utilizar es gl.uniform2f(), donde recibe de primeras la ubicacion guardada en la constante, y los valores x,y cambiantes.</p>
+                <p>Por ultimo se llama a la funcion gl.drawArrays() donde se define el modo de dibujado, vertice inicio, vertice final.</p>
+                <p>Existe diferentes maneras de dibujar, en este caso no se utilizo la estructura completa, sin embargo es funcional, no guardamos ningun tipo de dato si no que lo definimos solo para dibujarlo 1 vez.</p>
+                <p>Una estructura completa utilizaria un buffer y una variable que guarde los puntos definidos, por lo que el pipeline basico se veria de la siguiente manera.</p>
+            </div>
+            <div> 
+                <h3>PipeLine Basico</h3>
+                <a href="https://www.youtube.com/watch?v=E2wJiVQZCI0&list=PLRtjMdoYXLf4aWJ5WJl8_vBnynl6st_sQ&index=4"><img src="img/pipeline.svg" alt="PipeLine"></a>
+                <p>Si se quiere indagar mas sobre el funcionamiento de WebGL, existe una lista de reproduccion realizada por<a href=https://www.youtube.com/user/osakaandrew> Andrew Adamson</a>, la cual explica como funciona el WebGl moderno.</p>
+                <p>Existen paginas como <a href=https://developer.mozilla.org/en-US>developer mozilla</a>, <a href=https://webglfundamentals.org> WebGL fundamentals</a> o <a href=https://www.tutorialspoint.com/webgl/index.htm>tutorialspoint</a> donde se encuentran definiciones, tutoriales, demos del funcionamiento de WebGL, sus componenetes, funciones y estructura inicial.</p>
+            </div>        
+            <div>
+               <h1>RESULTADO</h1>
+            </div>
+            <div>
+                <canvas id="canvas" width ="600" height="600"></canvas>     
+                <script src="Uniform.js"></script>
+            </div>  
+            <div class="buttons">
+                <input type="button" id="point" value="Punto" onclick="point();"> </input>
+                <input type="button" id="bitmap" value="Bitmap" onclick="bitMap();"> </input>
+                <input type="button" id="sin" value="Funcion Seno" onclick="sin();"> </input>
+                <input type="button" id="line" value="Linea" onclick="line();"> </input>
+                <input type="button" id="circle" value="Circulo" onclick="circle();"> </input>
+            </div>
+            <div>
+                <h2>Observaciones</h2>
+                <p>Los dibujos mostrados anteriormente son hechos por medio del codigo explica mediante el uso de uniforms, estos solo permiten el uso de la primitiva punto. Si desea ver el codigo completo puede visitar el repositorio de <a href=https://github.com/AlejandroMejiaR/WebGL>gitHub</a> o bien inspeccionar el sitio.</p>
+            </div>
+        </article>
+    </main>
+</body>
+</html>

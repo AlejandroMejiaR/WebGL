@@ -1,0 +1,8 @@
+https://www.youtube.com/watch?v=UZgxS5hJscY /What a shader is, vertex-fragment shader.
+https://www.youtube.com/watch?v=dc__nhrXstc /How Fixed-Function Pipeline and Modern OpenGL Shaders works
+https://www.youtube.com/watch?v=L6uBJvoBhPA&list=PLRtjMdoYXLf4aWJ5WJl8_vBnynl6st_sQ&index=1 /WEBGL-OPENGL-OPENGLES DIFFERENCES
+https://www.youtube.com/watch?v=E2wJiVQZCI0&list=PLRtjMdoYXLf4aWJ5WJl8_vBnynl6st_sQ&index=4 /How rendering Pipeline works in WEBGL
+https://github.com/SonarSystems/WebGL-Tutorials/tree/master/Code/%5B2%5D%20Drawing%20Objects /drawing objects source point - line
+https://github.com/scriptfoundry/WebGL2-Videos-Materials
+https://www.youtube.com/playlist?list=PLPbmjY2NVO_X1U1JzLxLDdRn4NmtxyQQo
+
